@@ -1,22 +1,39 @@
 package ru.coldsun.homework3.repository;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.jdbc.core.JdbcTemplate;
 import ru.coldsun.homework3.domain.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class UserRepository {
 
+    private final JdbcTemplate jdbc;
+
+    public UserRepository(JdbcTemplate jdbc){
+        this.jdbc = jdbc;
+    }
+
     public List<User> getUsers() {
-        return users;
-    }
+        String sql = "SELECT * FROM userTable";
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+        RowMapper<User> userRowMapper = (r, i) -> {
+            User rowObject = new User();
+            rowObject.setName(r.getString("name"));
+            rowObject.setAge(r.getInt("age"));
+            rowObject.setEmail(r.getString("email"));
+            return rowObject;
+        };
 
-    private List<User> users = new ArrayList<>();
+        return jdbc.query(sql, userRowMapper);
+
+    }
+    public User setUsers(User user) {
+        String sql = "INSERT INTO userTable VALUES (NULL, ?, ?, ?)";
+        jdbc.update(sql, user.getName(), user.getAge(), user.getEmail());
+        return  user;
+    }
 
 }

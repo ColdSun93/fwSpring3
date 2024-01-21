@@ -21,8 +21,14 @@ public class UserController {
 
     @PostMapping("/body")
     public String userAddFromBody(@RequestBody User user) {
-        service.getDataProcessingService().getRepository().getUsers().add(user);
+        service.getDataProcessingService().getRepository().setUsers(user);
         return "User added from body!";
     }
+
+//    @PostMapping("/body")
+//    public String userAddFromParam(@RequestBody User user) {
+//        service.getDataProcessingService().getRepository().getUsers().add(user);
+//        return "User added from body!";
+//    }
 
 }
