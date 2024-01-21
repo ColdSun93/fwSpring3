@@ -1,17 +1,14 @@
 package ru.coldsun.homework3.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.coldsun.homework3.domain.User;
 import ru.coldsun.homework3.services.RegistrationService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")    //localhost:8080/user
+@RequestMapping("/users")    //localhost:8080/user
 public class UserController {
 
     @Autowired
@@ -22,6 +19,7 @@ public class UserController {
         return service.getDataProcessingService().getRepository().getUsers();
     }
 
+    @PostMapping("/body")
     public String userAddFromBody(@RequestBody User user) {
         service.getDataProcessingService().getRepository().getUsers().add(user);
         return "User added from body!";

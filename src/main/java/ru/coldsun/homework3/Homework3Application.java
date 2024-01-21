@@ -10,4 +10,5 @@ public class Homework3Application {
 		SpringApplication.run(Homework3Application.class, args);
 	}
 
+
 }
