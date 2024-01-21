@@ -6,6 +6,7 @@ import ru.coldsun.homework3.domain.User;
 import ru.coldsun.homework3.services.RegistrationService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")    //localhost:8080/user
@@ -19,16 +20,19 @@ public class UserController {
         return service.getDataProcessingService().getRepository().getUsers();
     }
 
-    @PostMapping("/body")
-    public String userAddFromBody(@RequestBody User user) {
-        service.getDataProcessingService().getRepository().setUsers(user);
-        return "User added from body!";
-    }
-
 //    @PostMapping("/body")
-//    public String userAddFromParam(@RequestBody User user) {
-//        service.getDataProcessingService().getRepository().getUsers().add(user);
+//    public String userAddFromBody(@RequestBody User user) {
+//        service.getDataProcessingService().getRepository().setUser(user);
 //        return "User added from body!";
 //    }
+
+    @PostMapping("/body")
+    public String userAddFromParam(@RequestBody Map<String, Object> requestBody) {
+        String name = (String) requestBody.get("name");
+        Integer age = (Integer) requestBody.get("age");
+        String email = (String) requestBody.get("email");
+        service.processRegistration(name,age, email);
+        return "User added from body!";
+    }
 
 }

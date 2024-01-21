@@ -30,10 +30,10 @@ public class UserRepository {
         return jdbc.query(sql, userRowMapper);
 
     }
-    public User setUsers(User user) {
+    public User setUser(User user) {
         String sql = "INSERT INTO userTable VALUES (NULL, ?, ?, ?)";
         jdbc.update(sql, user.getName(), user.getAge(), user.getEmail());
-        return  user;
+        return user;
     }
 
 }
